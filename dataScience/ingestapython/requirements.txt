@@ -1,0 +1,5 @@
+mysql-connector-python
+pandas
+boto3
+faker
+python-dotenv
