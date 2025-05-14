@@ -80,7 +80,7 @@ def generate_payments(clients):
             'plan_id': client['plan_id'],
             'amount': round(random.uniform(8, 30), 2),
             'date': fake.date_this_year(),
-            'payment_type' : random.choice(['CARD', 'BANK_TRANSFER', 'PAYPAL', 'CASH'])
+            'payment_type' : random.choice([0, 1, 2, 3])
         }
         payments.append(payment)
     return payments
