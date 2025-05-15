@@ -61,8 +61,8 @@ def generate_employees(sede_ids, n=20000):
     cursor.executemany(insert_query, values)
     db_connection.commit()
 
-    pd.DataFrame(employees_data).to_csv('employees.csv', index=False)
-    upload_to_s3('employees.csv')
+    pd.DataFrame(employees_data).to_csv('employees.csv', index=False, header=False)
+    #upload_to_s3('employees.csv')
     print(f"{n} empleados insertados.")
 
 
@@ -77,10 +77,12 @@ def upload_to_s3(file_name):
 
 
 if __name__ == '__main__':
-    cursor.execute("SELECT id FROM sede")
-    sede_ids = [row[0] for row in cursor.fetchall()]
-    print(f"{len(sede_ids)} sedes obtenidas de la base de datos.")
-    generate_employees(sede_ids)
+    cursor.execute("SELECT * FROM sede")
+    sede_rows = cursor.fetchall()
+    sede_columns = [desc[0] for desc in cursor.description]
+    pd.DataFrame(sede_rows, columns=sede_columns).to_csv("sedes.csv", index=False, header=False)
+    print(f"{len(sede_rows)} sedes obtenidas de la base de datos.")
+    # generate_employees(sede_ids)
     cursor.close()
     db_connection.close()
     print("Ingesta finalizada.")
