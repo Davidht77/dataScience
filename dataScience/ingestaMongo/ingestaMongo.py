@@ -31,12 +31,9 @@ POSTGRES_DB = os.getenv("POSTGRES_DB")
 fake = Faker()
 
 # Conectar a MongoDB
-if MONGO_USER and MONGO_PASSWORD:
-    mongo_client = MongoClient(MONGO_HOST, MONGO_PORT, username=MONGO_USER, password=MONGO_PASSWORD)
-else:
-    mongo_client = MongoClient(MONGO_HOST, MONGO_PORT)
-db = mongo_client["ingesta01Mongo"]
-collection = db["feedback"]
+mongo_client = MongoClient(MONGO_HOST, MONGO_PORT, username=MONGO_USER, password=MONGO_PASSWORD)
+db = mongo_client["mydatabase"]
+collection = db["feedbacks"]
 
 # Conectar a PostgreSQL y obtener client IDs
 def get_postgres_client_ids():
